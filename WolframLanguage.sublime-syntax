@@ -191,16 +191,28 @@ contexts:
         - include: expressions-nopattern
 
   function:
-    - match: ({{identifier}})\s*(\[(?!\[))
+    - match: ({{built_in_functions}})\s*(\[(?!\[))
       captures:
-        1: variable.function.wolfram
+        1: variable.function.wolfram.system
         3: punctuation.section.brackets.begin.wolfram
-      push: 
+      push:
         - meta_scope: meta.block.wolfram
         - match: \]
           scope: punctuation.section.brackets.end.wolfram
           pop: true
         - include: expressions
+    - match: ({{identifier}})\s*(\[(?!\[))
+      captures:
+        1: variable.function.wolfram
+        3: punctuation.section.brackets.begin.wolfram
+      push:
+        - meta_scope: meta.block.wolfram
+        - match: \]
+          scope: punctuation.section.brackets.end.wolfram
+          pop: true
+        - include: expressions
+    - match: ({{built_in_functions}})(?=\s*(@\*|@{1,3}|\/[@*]))
+      scope: variable.function.wolfram.system
     - match: ({{identifier}})(?=\s*(@\*|@{1,3}|\/[@*]))
       scope: variable.function.wolfram
 
